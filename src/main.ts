@@ -16,5 +16,4 @@ const app = createApp(App);
 Object.entries(pluginList).forEach(([, v]) => {
     app.use(v);
 });
-
 app.mount('#app');
