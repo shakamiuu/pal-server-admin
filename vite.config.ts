@@ -15,7 +15,7 @@ export default defineConfig({
         alias: [
             {
                 find: '@',
-                replacement: resolve(__dirname, '../src'),
+                replacement: resolve(__dirname, 'src'),
             },
         ],
         extensions: ['.ts', '.js'],
@@ -23,5 +23,11 @@ export default defineConfig({
     build: {
         emptyOutDir: false,
         outDir: 'dist-electron',
+        minify: 'terser',
+        terserOptions: {
+            compress: {
+                drop_console: true,
+            },
+        },
     },
 });

@@ -2,6 +2,13 @@ import { defineStore } from 'pinia';
 
 interface AppState {
     theme: 'dark' | 'light';
+    server: {
+        ip: string;
+        port: number;
+        username: string;
+        password: string;
+    };
+    link: boolean;
 }
 
 const key = 'app';
@@ -9,6 +16,13 @@ const key = 'app';
 const useStore = defineStore(key, {
     state: (): AppState => ({
         theme: 'dark',
+        server: {
+            ip: '127.0.0.1',
+            port: 22,
+            username: 'root',
+            password: '',
+        },
+        link: false,
     }),
 
     getters: {
@@ -27,14 +41,17 @@ const useStore = defineStore(key, {
             this.$reset();
         },
 
-        // 切换主题
-        toggleTheme(theme: AppState['theme']) {
-            this.theme = theme;
-            if (theme === 'dark') {
-                document.body.setAttribute('arco-theme', 'dark');
-            } else if (theme === 'light') {
-                document.body.removeAttribute('arco-theme');
-            }
+        setServer(server: AppState['server']) {
+            this.server = server;
+        },
+
+        login() {
+            this.link = true;
+        },
+
+        logout() {
+            this.link = false;
+            window.location.reload();
         },
     },
     persist: {

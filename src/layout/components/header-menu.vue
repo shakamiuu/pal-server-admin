@@ -1,0 +1,22 @@
+<template>
+    <a-menu
+        mode="horizontal"
+        :default-selected-keys="[$route.name]"
+        @menu-item-click="handleMenuItemClick"
+    >
+        <a-menu-item key="Build">服务器</a-menu-item>
+        <a-menu-item key="Config">游戏设定</a-menu-item>
+        <a-menu-item key="Instruct">GM指令</a-menu-item>
+        <a-menu-item key="Plan">定时计划</a-menu-item>
+    </a-menu>
+</template>
+
+<script lang="ts" setup>
+import router from '@/router';
+
+const handleMenuItemClick = (key: string) => {
+    router.push({ name: key });
+};
+</script>
+
+<style lang="less" scoped></style>
