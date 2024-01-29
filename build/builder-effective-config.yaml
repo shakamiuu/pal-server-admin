@@ -1,0 +1,26 @@
+directories:
+  output: build/
+  buildResources: build
+productName: PalServerAdmin
+asar: true
+files:
+  - filter:
+      - dist
+      - dist-electron/background.js
+mac:
+  icon: src/assets/image/logo.png
+  artifactName: ${productName}_${version}.${ext}
+  target:
+    - dmg
+win:
+  icon: src/assets/image/logo.png
+  target:
+    - target: nsis
+      arch:
+        - x64
+  artifactName: ${productName}_${version}.${ext}
+nsis:
+  oneClick: false
+  perMachine: false
+  deleteAppDataOnUninstall: false
+electronVersion: 28.2.0
