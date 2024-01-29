@@ -5,6 +5,14 @@
 正在开发中的一个幻兽帕鲁服务器控制程序
 别急！新叶猿还在 KK 园区敲键盘
 
+#### 预览
+
+[!login(https://gitee.com/haibiaoG/pal-server-admin/raw/master/assets/images/2024-01-29_15-03-59.png)]
+
+[!login(https://gitee.com/haibiaoG/pal-server-admin/raw/master/assets/images/2024-01-29_15-03-32.png)]
+
+[!login(https://gitee.com/haibiaoG/pal-server-admin/raw/master/assets/images/2024-01-29_15-03-46.png)]
+
 #### 暂定功能
 
 |     | 服务器部署     | 功能                       |
