@@ -1,6 +1,6 @@
 <template>
     <a-layout style="height: 100vh; width: 100vw">
-        <a-layout-header>
+        <a-layout-header style="background-color: var(--color-menu-dark-bg)">
             <a-row align="center" justify="space-between">
                 <a-col :span="18">
                     <header-menu></header-menu>
@@ -10,21 +10,23 @@
                 </a-col>
             </a-row>
         </a-layout-header>
-        <a-layout-content>
-            <div class="container">
-                <a-scrollbar
-                    style="height: calc(100vh - 100px); overflow: auto"
-                >
+        <a-layout>
+            <a-layout-content>
+                <div class="container">
                     <router-view />
-                </a-scrollbar>
-            </div>
-        </a-layout-content>
+                </div>
+            </a-layout-content>
+            <a-layout-sider style="margin: 20px">
+                <server-status></server-status>
+            </a-layout-sider>
+        </a-layout>
     </a-layout>
 </template>
 
 <script lang="ts" setup>
 import HeaderMenu from './components/header-menu.vue';
 import HeaderButton from './components/header-button.vue';
+import ServerStatus from './components/server-status.vue';
 </script>
 
 <style lang="less" scoped>

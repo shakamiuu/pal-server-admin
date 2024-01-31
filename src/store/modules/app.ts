@@ -1,12 +1,14 @@
+import router from '@/router';
+import axios from 'axios';
 import { defineStore } from 'pinia';
 
 interface AppState {
-    theme: 'dark' | 'light';
     server: {
-        ip: string;
+        host: string;
         port: number;
         username: string;
         password: string;
+        save: boolean;
     };
     link: boolean;
 }
@@ -15,12 +17,12 @@ const key = 'app';
 
 const useStore = defineStore(key, {
     state: (): AppState => ({
-        theme: 'dark',
         server: {
-            ip: '127.0.0.1',
+            host: '127.0.0.1',
             port: 22,
             username: 'root',
             password: '',
+            save: false,
         },
         link: false,
     }),
@@ -45,11 +47,19 @@ const useStore = defineStore(key, {
             this.server = server;
         },
 
-        login() {
+        async login(form: AppState['server']) {
+            const { data } = await axios.post('/api/link', form);
+            console.log(data);
+            if (form.save) {
+                this.setServer(form);
+            } else {
+                this.$reset();
+            }
             this.link = true;
+            router.push('/');
         },
-
         logout() {
+            axios.post('/api/link/close');
             this.link = false;
             window.location.reload();
         },

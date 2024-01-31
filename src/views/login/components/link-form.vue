@@ -6,11 +6,11 @@
         @submit-success="handleSubmit"
     >
         <a-form-item
-            field="ip"
+            field="host"
             :rules="[{ required: true, message: '请输入公网IP地址' }]"
             :validate-trigger="['change', 'input']"
         >
-            <a-input v-model="form.ip" placeholder="服务器公网IP地址">
+            <a-input v-model="form.host" placeholder="服务器公网IP地址">
                 <template #append>
                     <a-input-number
                         v-model="form.port"
@@ -36,7 +36,7 @@
             <a-input-password v-model="form.password" placeholder="密码" />
         </a-form-item>
         <a-form-item>
-            <a-checkbox v-model="save">
+            <a-checkbox v-model="form.save">
                 <span style="color: #fff"> 保存登录信息 </span>
             </a-checkbox>
         </a-form-item>
@@ -49,40 +49,37 @@
 </template>
 
 <script lang="ts" setup>
-import router from '@/router';
 import { useAppStore } from '@/store';
+import { AppState } from '@/store/modules/app';
 import { Message } from '@arco-design/web-vue';
 import { onMounted, ref } from 'vue';
 
 const loading = ref<boolean>(false);
 const appStore = useAppStore();
 
-const form = ref({
-    ip: '',
+const form = ref<AppState['server']>({
+    host: '127.0.0.1',
     port: 22,
     username: 'root',
     password: '',
+    save: false,
 });
 
-const save = ref<boolean>(false);
-
-const handleSubmit = () => {
+const handleSubmit = async () => {
     loading.value = true;
-    // TODO 请求链接服务器
-
-    setTimeout(() => {
-        loading.value = false;
+    try {
+        await appStore.login(form.value);
         Message.success('连接成功');
-        if (save.value) {
-            appStore.setServer(form.value);
-        }
-        appStore.login();
-        router.push('/');
-    }, 3000);
+    } catch (error) {
+        console.log(error);
+        Message.error('连接失败');
+    } finally {
+        loading.value = false;
+    }
 };
 
 onMounted(() => {
-    form.value = appStore.server;
+    form.value = JSON.parse(JSON.stringify(appStore.server));
 });
 </script>
 

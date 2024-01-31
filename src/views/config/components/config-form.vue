@@ -1,6 +1,6 @@
 <template>
     <a-form
-        model="form"
+        :model="form"
         :label-col-props="{ span: 8, offset: 2 }"
         :wrapper-col-props="{ span: 10 }"
     >
@@ -532,7 +532,7 @@
                 </a-form-item>
                 <a-form-item label="身份验证" tooltip="启用身份验证">
                     <a-switch
-                        v-model="form.bUseAuthL"
+                        v-model="form.bUseAuth"
                         checked-value="True"
                         unchecked-value="False"
                     />

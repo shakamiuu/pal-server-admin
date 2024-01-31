@@ -1,6 +1,7 @@
 <template>
     <a-menu
         mode="horizontal"
+        theme="dark"
         :default-selected-keys="[$route.name]"
         @menu-item-click="handleMenuItemClick"
     >

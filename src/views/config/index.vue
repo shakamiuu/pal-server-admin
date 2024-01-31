@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <a-scrollbar style="height: calc(100vh - 100px); overflow: auto">
         <config-form></config-form>
-    </div>
+    </a-scrollbar>
 </template>
 
 <script lang="ts" setup>
