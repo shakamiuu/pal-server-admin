@@ -111,7 +111,7 @@ const initSocket = () => {
             socket.value.close();
             clearInterval(interval.value);
         }
-        console.log('收到WebSocket消息', event);
+        // console.log('收到WebSocket消息', event);
     };
 };
 

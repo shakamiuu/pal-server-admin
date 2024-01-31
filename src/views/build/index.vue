@@ -119,10 +119,20 @@ const handleUpdate = () => {
 
 const handleBackup = () => {
     console.log('存档备份');
+    Modal.info({
+        title: '开发中',
+        content: '功能尚未落地，加Q群催更！群号：264059400',
+        okText: '明白',
+    });
 };
 
 const handleRestore = () => {
     console.log('存档恢复');
+    Modal.info({
+        title: '开发中',
+        content: '功能尚未落地，加Q群催更！群号：264059400',
+        okText: '明白',
+    });
 };
 
 const socket = ref();
