@@ -1,4 +1,3 @@
-import { useAppStore } from '@/store';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import { createRouter, createWebHashHistory } from 'vue-router';
@@ -9,16 +8,16 @@ const router = createRouter({
     history: createWebHashHistory(),
     routes: [
         {
-            path: '/login',
-            name: 'Login',
-            component: () => import('@/views/login/index.vue'),
-        },
-        {
             path: '/',
             name: 'Home',
             component: () => import('@/layout/index.vue'),
-            redirect: '/build',
+            redirect: '/index',
             children: [
+                {
+                    path: 'index',
+                    name: 'Index',
+                    component: () => import('@/views/index/index.vue'),
+                },
                 {
                     path: 'build',
                     name: 'Build',
@@ -45,18 +44,6 @@ const router = createRouter({
     scrollBehavior() {
         return { top: 0 };
     },
-});
-
-router.beforeEach(async (to, _from, next) => {
-    console.log('router===>', to);
-    NProgress.start();
-    const appStore = useAppStore();
-    if (appStore.link || to.name === 'Login') {
-        next();
-    } else {
-        router.push({ name: 'Login' });
-    }
-    NProgress.done();
 });
 
 export default router;

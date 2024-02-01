@@ -69,15 +69,19 @@
                     </a-step>
                 </a-steps>
             </a-card>
+
+            <server-install></server-install>
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
 import { Message, Modal } from '@arco-design/web-vue';
+import axios from 'axios';
 import { ref } from 'vue';
+import ServerInstall from './components/server-install.vue';
 
-const status = ref<'INSTALL' | 'UPDATE' | 'saved' | ''>('');
+const status = ref<'INSTALL' | 'UPDATE' | 'BACKUP' | ''>('');
 const step = ref<number>(0);
 const installDescription = ref<string[]>([
     '等待执行',
@@ -119,10 +123,17 @@ const handleUpdate = () => {
 
 const handleBackup = () => {
     console.log('存档备份');
-    Modal.info({
-        title: '开发中',
-        content: '功能尚未落地，加Q群催更！群号：264059400',
-        okText: '明白',
+    Modal.warning({
+        title: '备份提醒',
+        content: '存档备份时将关闭服务器，等备份完成后会自动开启！',
+        okText: '明白！',
+        cancelText: '等等',
+        hideCancel: false,
+        onOk: async () => {
+            const { data } = await axios.post(
+                `${import.meta.env.VITE_API_BASE_URL}/manage/backup`,
+            );
+        },
     });
 };
 
@@ -139,7 +150,7 @@ const socket = ref();
 
 // 初始化WebSocket连接
 const initSocket = () => {
-    const socketUrl = 'ws://localhost:8080/socket';
+    const socketUrl = `${import.meta.env.VITE_API_WEBSOCKET_URL}/socket`;
     socket.value = new WebSocket(socketUrl);
     socket.value.onopen = (event: Event) => {
         socket.value.send(JSON.stringify({ status: status.value }));
@@ -153,10 +164,13 @@ const initSocket = () => {
     };
     socket.value.onmessage = (event: MessageEvent) => {
         const data = JSON.parse(event.data);
-        if (data.status == 'progress') {
-            step.value = data.data.step * 1 + 1;
-            installDescription.value[step.value] = data.data.message;
-            if (data.data.status == 'error') {
+        console.log('收到WebSocket消息', data);
+        switch (data.status) {
+            case 'processing':
+                step.value = data.data.step * 1 + 1;
+                installDescription.value[step.value - 1] = data.data.message;
+                break;
+            case 'error':
                 Modal.error({
                     title: '操作失败',
                     content: data.data.message,
@@ -164,7 +178,8 @@ const initSocket = () => {
                         status.value = '';
                     },
                 });
-            } else if (data.data.status == 'finish') {
+                break;
+            case 'finish':
                 Modal.info({
                     title: '操作完成',
                     content: data.data.message,
@@ -174,14 +189,15 @@ const initSocket = () => {
                         }, 2000);
                     },
                 });
-            }
-        } else if (data.status == 'success') {
-            socket.value.close();
-        } else {
-            Message.error('服务器连接异常！');
-            socket.value.close();
+                break;
+            case 'done':
+                socket.value.close();
+                break;
+            default:
+                Message.error('服务器连接异常！');
+                socket.value.close();
+                break;
         }
-        console.log('收到WebSocket消息', event);
     };
 };
 </script>

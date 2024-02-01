@@ -54,7 +54,17 @@ const handleDefault = () => {
 
 const handleGetSetting = async () => {
     console.log('handleGetSetting');
-    const { data } = await axios.post('/api/setting/getPalWorldSettings');
+    const { data } = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/setting/getPalWorldSettings`,
+    );
+    if (!data) {
+        Modal.warning({
+            title: '配置未完全加载',
+            content: '请稍后再试',
+            okText: '收到',
+        });
+        return;
+    }
     tableData.value = [];
     console.log('getPalWorldSettings', data);
     // 使用 "(" 分割字符串
@@ -87,7 +97,10 @@ const handleSaveSetting = () => {
         cancelText: '还没改完',
         hideCancel: false,
         onOk: async () => {
-            await axios.post('/api/setting/setPalWorldSettings', { ini });
+            await axios.post(
+                `${import.meta.env.VITE_API_BASE_URL}/setting/setPalWorldSettings`,
+                { ini },
+            );
             Message.success('保存成功！');
         },
     });

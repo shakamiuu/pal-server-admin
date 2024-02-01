@@ -5,20 +5,22 @@
                 <icon-sync />
             </a-button>
         </a-tooltip>
-        <a-tooltip content="退出登录">
+        <a-tooltip v-if="serverStore.status.link" content="退出">
             <a-button shape="circle" @click="handLogout">
                 <icon-export />
             </a-button>
         </a-tooltip>
+        <connect-server v-else></connect-server>
     </a-space>
 </template>
 
 <script lang="ts" setup>
-import { useAppStore } from '@/store';
+import { useServerStore } from '@/store';
 import { Message, Modal } from '@arco-design/web-vue';
 import axios from 'axios';
+import ConnectServer from './connect-server.vue';
 
-const appStore = useAppStore();
+const serverStore = useServerStore();
 
 const handleRestart = () => {
     Modal.warning({
@@ -28,14 +30,17 @@ const handleRestart = () => {
         cancelText: '按错了！',
         hideCancel: false,
         onOk: async () => {
-            await axios.post('/api/manage/restart');
+            await axios.post(
+                `${import.meta.env.VITE_API_BASE_URL}/manage/restart`,
+            );
             Message.success('重启成功');
         },
     });
 };
 
 const handLogout = () => {
-    appStore.logout();
+    console.log('handLogout');
+    serverStore.closeServer();
 };
 </script>
 

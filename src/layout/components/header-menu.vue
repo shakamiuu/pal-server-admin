@@ -5,6 +5,7 @@
         :default-selected-keys="[$route.name]"
         @menu-item-click="handleMenuItemClick"
     >
+        <a-menu-item key="Index">总览</a-menu-item>
         <a-menu-item key="Build">服务器</a-menu-item>
         <a-menu-item key="Config">游戏设定</a-menu-item>
         <a-menu-item key="Instruct">GM指令</a-menu-item>
