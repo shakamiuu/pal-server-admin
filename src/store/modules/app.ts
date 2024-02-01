@@ -48,7 +48,10 @@ const useStore = defineStore(key, {
         },
 
         async login(form: AppState['server']) {
-            const { data } = await axios.post('/api/link', form);
+            const { data } = await axios.post(
+                `${import.meta.env.VITE_API_BASE_URL}/link`,
+                form,
+            );
             console.log(data);
             if (form.save) {
                 this.setServer(form);
@@ -56,10 +59,10 @@ const useStore = defineStore(key, {
                 this.$reset();
             }
             this.link = true;
-            router.push('/');
+            router.push({ name: 'Home' });
         },
         logout() {
-            axios.post('/api/link/close');
+            axios.post(`${import.meta.env.VITE_API_BASE_URL}/link/close`);
             this.link = false;
             window.location.reload();
         },

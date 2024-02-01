@@ -28,7 +28,9 @@ const handleRestart = () => {
         cancelText: '按错了！',
         hideCancel: false,
         onOk: async () => {
-            await axios.post('/api/manage/restart');
+            await axios.post(
+                `${import.meta.env.VITE_API_BASE_URL}/manage/restart`,
+            );
             Message.success('重启成功');
         },
     });

@@ -9,15 +9,15 @@ const router = createRouter({
     history: createWebHashHistory(),
     routes: [
         {
-            path: '/login',
+            path: '/',
             name: 'Login',
             component: () => import('@/views/login/index.vue'),
         },
         {
-            path: '/',
+            path: '/home',
             name: 'Home',
             component: () => import('@/layout/index.vue'),
-            redirect: '/build',
+            redirect: '/home/build',
             children: [
                 {
                     path: 'build',

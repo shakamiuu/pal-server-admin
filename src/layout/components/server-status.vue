@@ -89,7 +89,7 @@ const socket = ref();
 
 // 初始化WebSocket连接
 const initSocket = () => {
-    const socketUrl = 'ws://localhost:8080/socket';
+    const socketUrl = `${import.meta.env.VITE_API_WEBSOCKET_URL}/socket`;
     socket.value = new WebSocket(socketUrl);
     socket.value.onopen = (event: Event) => {
         console.log('WebSocket连接已打开', event);
@@ -102,7 +102,7 @@ const initSocket = () => {
     };
     socket.value.onmessage = (event: MessageEvent) => {
         const data = JSON.parse(event.data);
-        if (data.status == 'success') {
+        if (data.status == 'done') {
             systemInfo.value.cpu = data.data.cpu;
             systemInfo.value.memory = data.data.memory;
             systemInfo.value.disk = data.data.disk;
