@@ -17,10 +17,7 @@ interface ServerState {
         [key: string]: SSHModel;
     };
     monitor?: WebSocket;
-    status: {
-        link: boolean;
-        [key: string]: string | number | boolean;
-    };
+    link: boolean;
 }
 
 const key = 'server';
@@ -34,7 +31,7 @@ const useStore = defineStore(key, {
             password: '',
         },
         servers: {},
-        status: { link: false },
+        link: false,
     }),
 
     getters: {
@@ -65,10 +62,10 @@ const useStore = defineStore(key, {
                 Message.success('连接成功');
                 server.system = data;
                 this.server = server;
+                // 修改状态
+                this.link = true;
                 // 保存到服务器列表
                 this.addServer(server.host, server);
-                // 开始监听
-                this.startMonitor();
             } catch (e) {
                 Message.error('连接失败');
             } finally {
@@ -81,8 +78,8 @@ const useStore = defineStore(key, {
             const appStore = useAppStore();
             appStore.setLoading(true);
             try {
-                // 关闭监听
-                this.closeMonitor();
+                // 修改状态
+                this.link = false;
                 // 断开连接
                 await axios.post(
                     `${import.meta.env.VITE_API_BASE_URL}/link/close`,
@@ -100,33 +97,6 @@ const useStore = defineStore(key, {
         // 删除服务器
         async removeServer(host: string) {
             delete this.servers[host];
-        },
-
-        // 开始监听服务器状态
-        startMonitor() {
-            const socketUrl = `${import.meta.env.VITE_API_WEBSOCKET_URL}/ws/monitor`;
-            this.monitor = new WebSocket(socketUrl);
-            this.monitor.onopen = (event: Event) => {
-                console.log('监听服务器状态已打开', event);
-                this.status = { link: true };
-            };
-            this.monitor.onerror = (event: Event) => {
-                console.log('监听服务器状态发生错误', event);
-                this.status = { link: false };
-            };
-            this.monitor.onclose = (event: CloseEvent) => {
-                console.log('监听服务器状态已关闭', event);
-                this.status = { link: false };
-            };
-            this.monitor.onmessage = (event: MessageEvent) => {
-                console.log('监听服务器状态', event);
-            };
-        },
-
-        // 关闭监听
-        closeMonitor() {
-            this.status = { link: false };
-            this.monitor?.close();
         },
     },
     persist: {

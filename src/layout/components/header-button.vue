@@ -5,7 +5,7 @@
                 <icon-sync />
             </a-button>
         </a-tooltip>
-        <a-tooltip v-if="serverStore.status.link" content="退出">
+        <a-tooltip v-if="serverStore.link" content="退出">
             <a-button shape="circle" @click="handLogout">
                 <icon-export />
             </a-button>
