@@ -109,10 +109,10 @@ const handleSaveSetting = () => {
         cancelText: '还没改完',
         hideCancel: false,
         onOk: async () => {
-            // await axios.post(
-            //     `${import.meta.env.VITE_API_BASE_URL}/setting/setPalWorldSettings`,
-            //     { ini },
-            // );
+            await axios.post(
+                `${import.meta.env.VITE_API_BASE_URL}/setting/setPalWorldSettings`,
+                { ini },
+            );
             Message.success('保存成功！');
         },
     });
