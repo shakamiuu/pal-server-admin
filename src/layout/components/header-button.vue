@@ -1,8 +1,18 @@
 <template>
     <a-space size="large">
+        <a-tooltip content="开启服务器">
+            <a-button shape="circle" status="success" @click="handleStart">
+                <icon-play-arrow-fill />
+            </a-button>
+        </a-tooltip>
         <a-tooltip content="重启服务器">
-            <a-button shape="circle" status="danger" @click="handleRestart">
+            <a-button shape="circle" status="warning" @click="handleRestart">
                 <icon-sync />
+            </a-button>
+        </a-tooltip>
+        <a-tooltip content="停止服务器">
+            <a-button shape="circle" status="danger" @click="handleStop">
+                <icon-poweroff />
             </a-button>
         </a-tooltip>
         <a-tooltip v-if="serverStore.link" content="退出">
@@ -21,6 +31,14 @@ import axios from 'axios';
 import ConnectServer from './connect-server.vue';
 
 const serverStore = useServerStore();
+
+const handleStart = () => {
+    console.log('handleStart');
+};
+
+const handleStop = () => {
+    console.log('handleStop');
+};
 
 const handleRestart = () => {
     Modal.warning({

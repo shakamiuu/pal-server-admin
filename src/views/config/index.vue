@@ -82,7 +82,8 @@ const handleGetSetting = async () => {
             key,
             value,
         });
-        setting.value[key] = toNumber(value);
+        // 排除IP地址
+        setting.value[key] = key != 'PublicIP' ? toNumber(value) : value;
     }
 };
 

@@ -31,10 +31,13 @@
                 size="large"
                 animation
             ></a-progress>
-            <a-typography-title :heading="6">
+            <a-typography-title v-if="systemInfo?.memTotal" :heading="6">
                 {{
                     `内存(${((systemInfo?.memUsed + systemInfo?.memBuffCache) / 1024 / 1024).toFixed(2)}G/${(systemInfo?.memTotal / 1024 / 1024).toFixed(2)}G)`
                 }}
+            </a-typography-title>
+            <a-typography-title v-else :heading="6">
+                内存空间
             </a-typography-title>
         </div>
         <div style="display: flex; flex-direction: column; align-items: center">
@@ -44,10 +47,13 @@
                 size="large"
                 animation
             ></a-progress>
-            <a-typography-title :heading="6">
+            <a-typography-title v-if="systemInfo?.diskSize" :heading="6">
                 {{
                     `硬盘空间(${(systemInfo?.diskUsed / 1024).toFixed(2)}G/${(systemInfo?.diskSize / 1024).toFixed(2)}G)`
                 }}
+            </a-typography-title>
+            <a-typography-title v-else :heading="6">
+                硬盘空间
             </a-typography-title>
         </div>
     </a-space>
@@ -55,6 +61,7 @@
 
 <script lang="ts" setup>
 import { useServerStore } from '@/store';
+import { Modal } from '@arco-design/web-vue';
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 
 const serverStore = useServerStore();
@@ -108,6 +115,12 @@ const startMonitor = () => {
     };
     monitor.value.onclose = (event: CloseEvent) => {
         console.log('监听服务器状态已关闭', event);
+        Modal.warning({
+            title: '连接断开',
+            content: '与服务器的连接已断开',
+        });
+        systemInfo.value = undefined;
+        serverStore.closeServer();
     };
     monitor.value.onmessage = (event: MessageEvent) => {
         // console.log('监听服务器状态', event);
