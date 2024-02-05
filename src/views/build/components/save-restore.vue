@@ -7,7 +7,9 @@
         :show-remove-button="false"
     >
         <template #upload-button>
-            <a-button type="primary" :disabled="disabled">上传存档</a-button>
+            <a-button type="primary" status="warning" :disabled="disabled">
+                存档恢复
+            </a-button>
         </template>
     </a-upload>
 </template>

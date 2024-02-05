@@ -13,14 +13,14 @@
                 </a-col>
             </a-row>
         </a-layout-header>
-        <a-layout>
+        <a-layout class="bg">
             <a-layout-content>
                 <div class="container">
                     <router-view />
                 </div>
             </a-layout-content>
-            <a-layout-sider style="margin: 20px">
-                <server-status></server-status>
+            <a-layout-sider>
+                <server-status style="padding: 10px"></server-status>
             </a-layout-sider>
         </a-layout>
     </a-layout>
@@ -35,5 +35,12 @@ import ServerStatus from './components/server-status.vue';
 <style lang="less" scoped>
 .container {
     padding: 20px;
+}
+.bg {
+    height: calc(100vh - 145px);
+    background-image: url('@/assets/image/login_bg.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
 }
 </style>

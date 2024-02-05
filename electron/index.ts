@@ -1,4 +1,4 @@
-import { app, BrowserWindow, Menu } from 'electron';
+import { app, BrowserWindow, Menu, shell } from 'electron';
 import { exec } from 'child_process';
 import path from 'path';
 import log from 'electron-log';
@@ -43,6 +43,14 @@ app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit();
     }
+});
+
+// 默认浏览器打开链接
+app.on('web-contents-created', (e, webContents) => {
+    webContents.setWindowOpenHandler(({ url }) => {
+        shell.openExternal(url);
+        return { action: 'deny' };
+    });
 });
 
 const startServer = () => {

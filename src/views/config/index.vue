@@ -12,6 +12,7 @@
                         <template #icon>
                             <icon-sync />
                         </template>
+                        默认设置
                     </a-button>
                 </a-tooltip>
 
@@ -24,6 +25,7 @@
                         <template #icon>
                             <icon-upload />
                         </template>
+                        保存
                     </a-button>
                 </a-tooltip>
             </a-space>
