@@ -21,6 +21,19 @@
 
 ![](https://gitee.com/haibiaoG/pal-server-admin/raw/master/assets/images/2024-02-05_13-36-01.png)
 
+#### 安装教程
+
+1.  下载最新安装程序或免安装包
+
+    [EXE 安装包下载](https://download.mingyenet.com/palworld//幻兽帕鲁GM工具_0.2.0.exe)
+
+    [ZIP 免安装包下载](https://download.mingyenet.com/palworld//幻兽帕鲁GM工具_0.2.0.zip)
+
+    [百度网盘下载](https://pan.baidu.com/s/1iWu0HW3bl7uFn8K2zPMm2A?pwd=93K7)
+
+2.  安装或解压
+3.  运行`幻兽帕鲁GM工具.exe`
+
 #### 暂定功能
 
 |     | 服务器部署     | 功能                                       |
@@ -34,16 +47,6 @@
 | ✓   | 存档恢复       | 本地存档恢复到服务器                       |
 |     | 定时任务       | 配置定时执行重新或更新任务                 |
 |     | 自动释放内存   | 监控服务器内存状态自动公告游戏内玩家并重启 |
-
-#### 安装教程
-
-1. 下载最新安装程序或免安装包
-   [EXE 安装包下载](https://download.mingyenet.com/palworld//幻兽帕鲁GM工具_0.2.0.exe)
-   [ZIP 免安装包下载](https://download.mingyenet.com/palworld//幻兽帕鲁GM工具_0.2.0.zip)
-   [百度网盘下载](https://pan.baidu.com/s/1iWu0HW3bl7uFn8K2zPMm2A?pwd=93K7)
-
-2. 安装或解压
-3. 运行`幻兽帕鲁GM工具.exe`
 
 #### 使用说明
 
