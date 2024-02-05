@@ -25,11 +25,9 @@
 
 1.  下载最新安装程序或免安装包
 
-    [EXE 安装包下载](https://download.mingyenet.com/palworld//幻兽帕鲁GM工具_0.2.0.exe)
+    [EXE 安装包下载](https://download.mingyenet.com/palworld//幻兽帕鲁GM工具_0.2.1.exe)
 
-    [ZIP 免安装包下载](https://download.mingyenet.com/palworld//幻兽帕鲁GM工具_0.2.0.zip)
-
-    [百度网盘下载](https://pan.baidu.com/s/1iWu0HW3bl7uFn8K2zPMm2A?pwd=93K7)
+    [ZIP 免安装包下载](https://download.mingyenet.com/palworld//幻兽帕鲁GM工具_0.2.1.zip)
 
 2.  安装或解压
 3.  运行`幻兽帕鲁GM工具.exe`
