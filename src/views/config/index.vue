@@ -44,6 +44,15 @@ import ConfigForm from './components/config-form.vue';
 import { defSetting } from './components/config';
 
 const configRef = ref();
+const addQuotations = ref([
+    'ServerName',
+    'ServerDescription',
+    'AdminPassword',
+    'ServerPassword',
+    'PublicIP',
+    'Region',
+    'BanListURL',
+]);
 
 const tableData = ref<any[]>([]);
 
@@ -100,10 +109,10 @@ const handleSaveSetting = () => {
         cancelText: '还没改完',
         hideCancel: false,
         onOk: async () => {
-            await axios.post(
-                `${import.meta.env.VITE_API_BASE_URL}/setting/setPalWorldSettings`,
-                { ini },
-            );
+            // await axios.post(
+            //     `${import.meta.env.VITE_API_BASE_URL}/setting/setPalWorldSettings`,
+            //     { ini },
+            // );
             Message.success('保存成功！');
         },
     });
@@ -117,7 +126,12 @@ OptionSettings=(`;
     // 按照config的顺序生成ini
     for (let i = 0; i < tableData.value.length; i++) {
         const item = tableData.value[i];
-        tmp += `${item.key}=${toFixedSix(setting.value[item.key])},`;
+        // 判断key是否在addQuotations中如果在里面就需要添加双引号
+        if (addQuotations.value.includes(item.key)) {
+            tmp += `${item.key}="${toFixedSix(setting.value[item.key])}",`;
+        } else {
+            tmp += `${item.key}=${toFixedSix(setting.value[item.key])},`;
+        }
     }
     tmp = tmp.slice(0, -1);
     // 去除换行符
