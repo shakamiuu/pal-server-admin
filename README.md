@@ -7,13 +7,19 @@
 
 #### 预览
 
-![](https://gitee.com/haibiaoG/pal-server-admin/raw/master/assets/images/pal.gif)
+![](https://gitee.com/haibiaoG/pal-server-admin/raw/master/assets/images/2024-02-05_13-33-31.png)
 
-![](https://gitee.com/haibiaoG/pal-server-admin/raw/master/assets/images/2024-01-29_15-03-59.png)
+![](https://gitee.com/haibiaoG/pal-server-admin/raw/master/assets/images/2024-02-05_13-34-31.png)
 
-![](https://gitee.com/haibiaoG/pal-server-admin/raw/master/assets/images/2024-01-29_15-03-46.png)
+![](https://gitee.com/haibiaoG/pal-server-admin/raw/master/assets/images/2024-02-05_13-34-24.png)
 
-![](https://gitee.com/haibiaoG/pal-server-admin/raw/master/assets/images/2024-02-01_12-34-41.png)
+![](https://gitee.com/haibiaoG/pal-server-admin/raw/master/assets/images/2024-02-05_13-35-06.png)
+
+![](https://gitee.com/haibiaoG/pal-server-admin/raw/master/assets/images/2024-02-05_13-35-30.png)
+
+![](https://gitee.com/haibiaoG/pal-server-admin/raw/master/assets/images/2024-02-05_13-35-40.png)
+
+![](https://gitee.com/haibiaoG/pal-server-admin/raw/master/assets/images/2024-02-05_13-36-01.png)
 
 #### 暂定功能
 
@@ -24,8 +30,8 @@
 | ✓   | 重启服务器     | 重启服务端释放内存                         |
 | ✓   | 更新游戏       | 更新服务端游戏版本                         |
 | ✓   | 修改游戏设定   | 直接修改游戏设定，不用登录服务器           |
-|     | 存档备份       | 将游戏存档保存到本地                       |
-|     | 存档恢复       | 本地存档恢复到服务器                       |
+| ✓   | 存档备份       | 将游戏存档保存到本地                       |
+| ✓   | 存档恢复       | 本地存档恢复到服务器                       |
 |     | 定时任务       | 配置定时执行重新或更新任务                 |
 |     | 自动释放内存   | 监控服务器内存状态自动公告游戏内玩家并重启 |
 
@@ -44,9 +50,10 @@ QQ群：264059400
 
 #### 更新日志
 
-| 版本  | 发布时间   | 说明       |
-| ----- | ---------- | ---------- |
-| 0.1.0 | 2024-02-01 | 体验版发布 |
+| 版本  | 发布时间   | 说明                       |
+| ----- | ---------- | -------------------------- |
+| 0.2.0 | 2024-02-05 | 增加存档备份/回档/删档功能 |
+| 0.1.0 | 2024-02-01 | 体验版发布                 |
 
 #### 参与贡献
 

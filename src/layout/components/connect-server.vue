@@ -1,7 +1,10 @@
 <template>
     <a-tooltip content="连接">
-        <a-button shape="circle" @click="handLink">
-            <icon-link />
+        <a-button shape="round" @click="handLink">
+            <template #icon>
+                <icon-link />
+            </template>
+            <template #default> 连接 </template>
         </a-button>
     </a-tooltip>
     <a-modal

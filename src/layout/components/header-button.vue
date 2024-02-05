@@ -8,7 +8,13 @@
             >
                 运行中
             </a-tag>
-            <a-tag v-else color="red" :loading="startLoading"> 已停止 </a-tag>
+            <a-tag
+                v-if="serverStore.status?.palServerStatus == 'EXITED'"
+                color="red"
+                :loading="startLoading"
+            >
+                已停止
+            </a-tag>
         </div>
 
         <a-tooltip
@@ -28,7 +34,10 @@
                 <template #default> 启动 </template>
             </a-button>
         </a-tooltip>
-        <a-tooltip v-else content="停止服务器">
+        <a-tooltip
+            v-if="serverStore.status?.palServerStatus == 'UP'"
+            content="停止服务器"
+        >
             <a-button
                 status="danger"
                 shape="round"
@@ -44,6 +53,7 @@
         </a-tooltip>
         <a-tooltip content="重启服务器">
             <a-button
+                v-if="serverStore.link"
                 status="warning"
                 shape="round"
                 :loading="startLoading || stopLoading"
@@ -56,8 +66,11 @@
             </a-button>
         </a-tooltip>
         <a-tooltip v-if="serverStore.link" content="退出">
-            <a-button shape="circle" @click="handLogout">
-                <icon-export />
+            <a-button shape="round" @click="handLogout">
+                <template #icon>
+                    <icon-export />
+                </template>
+                <template #default> 断开连接 </template>
             </a-button>
         </a-tooltip>
         <connect-server v-else></connect-server>
