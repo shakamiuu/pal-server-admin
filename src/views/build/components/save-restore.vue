@@ -1,12 +1,13 @@
 <template>
     <a-upload
-        :action="`${baseUrl}/manage/upload`"
+        :action="`${baseUrl}/save/restore`"
         :limit="1"
         accept=".tar.gz"
         :disabled="disabled"
+        :show-remove-button="false"
     >
         <template #upload-button>
-            <a-button type="primary">上传存档</a-button>
+            <a-button type="primary" :disabled="disabled">上传存档</a-button>
         </template>
     </a-upload>
 </template>

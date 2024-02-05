@@ -31,9 +31,12 @@
                 size="large"
                 animation
             ></a-progress>
-            <a-typography-title v-if="systemInfo?.memTotal" :heading="6">
+            <a-typography-title
+                v-if="serverStore.status?.memTotal"
+                :heading="6"
+            >
                 {{
-                    `内存(${((systemInfo?.memUsed + systemInfo?.memBuffCache) / 1024 / 1024).toFixed(2)}G/${(systemInfo?.memTotal / 1024 / 1024).toFixed(2)}G)`
+                    `内存(${((serverStore.status?.memUsed + serverStore.status?.memBuffCache) / 1024 / 1024).toFixed(2)}G/${(serverStore.status?.memTotal / 1024 / 1024).toFixed(2)}G)`
                 }}
             </a-typography-title>
             <a-typography-title v-else :heading="6">
@@ -47,9 +50,12 @@
                 size="large"
                 animation
             ></a-progress>
-            <a-typography-title v-if="systemInfo?.diskSize" :heading="6">
+            <a-typography-title
+                v-if="serverStore.status?.diskSize"
+                :heading="6"
+            >
                 {{
-                    `硬盘空间(${(systemInfo?.diskUsed / 1024).toFixed(2)}G/${(systemInfo?.diskSize / 1024).toFixed(2)}G)`
+                    `硬盘空间(${(serverStore.status?.diskUsed / 1024).toFixed(2)}G/${(serverStore.status?.diskSize / 1024).toFixed(2)}G)`
                 }}
             </a-typography-title>
             <a-typography-title v-else :heading="6">
@@ -67,8 +73,6 @@ import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 const serverStore = useServerStore();
 const monitor = ref();
 
-const systemInfo = ref();
-
 const status = (percent: number) => {
     if (percent < 0.5) {
         return 'normal';
@@ -80,18 +84,18 @@ const status = (percent: number) => {
 };
 
 const load = computed(
-    () => Math.ceil(systemInfo.value?.loadAverage * 100) / 100 || 0,
+    () => Math.ceil(serverStore.status?.loadAverage * 100) / 100 || 0,
 );
 
 const cpuPer = computed(
-    () => Math.ceil(100 - systemInfo.value?.cpuIdle) / 100 || 0,
+    () => Math.ceil(100 - serverStore.status?.cpuIdle) / 100 || 0,
 );
 
 const memoryPer = computed(
     () =>
         Math.ceil(
-            ((systemInfo.value?.memBuffCache + systemInfo.value?.memUsed) /
-                systemInfo.value?.memTotal) *
+            ((serverStore.status?.memBuffCache + serverStore.status?.memUsed) /
+                serverStore.status?.memTotal) *
                 100,
         ) / 100 || 0,
 );
@@ -99,7 +103,7 @@ const memoryPer = computed(
 const diskPer = computed(
     () =>
         Math.ceil(
-            (systemInfo.value?.diskUsed / systemInfo.value?.diskSize) * 100,
+            (serverStore.status?.diskUsed / serverStore.status?.diskSize) * 100,
         ) / 100 || 0,
 );
 
@@ -119,12 +123,12 @@ const startMonitor = () => {
             title: '连接断开',
             content: '与服务器的连接已断开',
         });
-        systemInfo.value = undefined;
+        serverStore.setStatus(undefined);
         serverStore.closeServer();
     };
     monitor.value.onmessage = (event: MessageEvent) => {
         // console.log('监听服务器状态', event);
-        systemInfo.value = JSON.parse(event.data);
+        serverStore.setStatus(JSON.parse(event.data));
     };
 };
 

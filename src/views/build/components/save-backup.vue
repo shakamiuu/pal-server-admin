@@ -20,7 +20,7 @@ const handleBackup = () => {
         hideCancel: false,
         onOk: async () => {
             await axios({
-                url: `${import.meta.env.VITE_API_BASE_URL}/manage/backup`,
+                url: `${import.meta.env.VITE_API_BASE_URL}/save/backup`,
                 method: 'post',
                 responseType: 'blob',
             }).then((res) => {

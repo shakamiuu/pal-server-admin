@@ -2,10 +2,13 @@
     <a-layout style="height: 100vh; width: 100vw">
         <a-layout-header style="background-color: var(--color-menu-dark-bg)">
             <a-row align="center" justify="space-between">
-                <a-col :span="18">
+                <a-col :span="12">
                     <header-menu></header-menu>
                 </a-col>
-                <a-col :span="6" style="text-align: right; padding-right: 20px">
+                <a-col
+                    :span="12"
+                    style="text-align: right; padding-right: 20px"
+                >
                     <header-button></header-button>
                 </a-col>
             </a-row>

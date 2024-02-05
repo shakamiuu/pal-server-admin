@@ -16,6 +16,9 @@ interface ServerState {
     servers: {
         [key: string]: SSHModel;
     };
+    status: {
+        [key: string]: any;
+    };
     monitor?: WebSocket;
     link: boolean;
 }
@@ -31,6 +34,7 @@ const useStore = defineStore(key, {
             password: '',
         },
         servers: {},
+        status: {},
         link: false,
     }),
 
@@ -97,6 +101,10 @@ const useStore = defineStore(key, {
         // 删除服务器
         async removeServer(host: string) {
             delete this.servers[host];
+        },
+
+        setStatus(status: any) {
+            this.status = status;
         },
     },
     persist: {
