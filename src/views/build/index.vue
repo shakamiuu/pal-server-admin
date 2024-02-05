@@ -11,6 +11,7 @@
                     ></server-update>
                     <save-backup :disabled="!serverStore.link"></save-backup>
                     <save-restore :disabled="!serverStore.link"></save-restore>
+                    <save-clear :disabled="!serverStore.link"></save-clear>
                 </a-space>
             </a-space>
         </a-card>
@@ -22,6 +23,7 @@ import ServerInstall from './components/server-install.vue';
 import ServerUpdate from './components/server-update.vue';
 import SaveBackup from './components/save-backup.vue';
 import SaveRestore from './components/save-restore.vue';
+import SaveClear from './components/save-clear.vue';
 import { useServerStore } from '@/store';
 
 const serverStore = useServerStore();
