@@ -41,19 +41,21 @@ import { Message, Modal } from '@arco-design/web-vue';
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import ConfigForm from './components/config-form.vue';
-import { defSetting } from './components/config';
+import {
+    defSetting,
+    gameSetting,
+    otherSetting,
+    pvpSetting,
+    serverSetting,
+} from './components/config';
 
 const configRef = ref();
-const addQuotations = ref([
-    'ServerName',
-    'ServerDescription',
-    'AdminPassword',
-    'ServerPassword',
-    'PublicIP',
-    'Region',
-    'BanListURL',
-]);
-
+const settings = [
+    ...gameSetting,
+    ...pvpSetting,
+    ...serverSetting,
+    ...otherSetting,
+];
 const tableData = ref<any[]>([]);
 
 const setting = ref<any>({});
@@ -66,7 +68,7 @@ const handleDefault = () => {
 const handleGetSetting = async () => {
     console.log('handleGetSetting');
     const { data } = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/setting/getPalWorldSettings`,
+        'http://localhost:18181/setting/getPalWorldSettings',
     );
     if (!data) {
         Modal.warning({
@@ -93,8 +95,16 @@ const handleGetSetting = async () => {
             key,
             value,
         });
+        const config = settings.find((s) => s.name === key);
+
+        if (!config) {
+            continue;
+        }
         // 排除IP地址
-        setting.value[key] = key != 'PublicIP' ? toNumber(value) : value;
+        setting.value[key] =
+            config.type == 'integer' || config.type == 'number'
+                ? toNumber(value)
+                : value;
     }
 };
 
@@ -110,7 +120,7 @@ const handleSaveSetting = () => {
         hideCancel: false,
         onOk: async () => {
             await axios.post(
-                `${import.meta.env.VITE_API_BASE_URL}/setting/setPalWorldSettings`,
+                'http://localhost:18181/setting/setPalWorldSettings',
                 { ini },
             );
             Message.success('保存成功！');
@@ -126,11 +136,23 @@ OptionSettings=(`;
     // 按照config的顺序生成ini
     for (let i = 0; i < tableData.value.length; i++) {
         const item = tableData.value[i];
-        // 判断key是否在addQuotations中如果在里面就需要添加双引号
-        if (addQuotations.value.includes(item.key)) {
-            tmp += `${item.key}="${toFixedSix(setting.value[item.key])}",`;
-        } else {
-            tmp += `${item.key}=${toFixedSix(setting.value[item.key])},`;
+        const config = settings.find((s) => s.name === item.key);
+        if (!config) {
+            continue;
+        }
+        switch (config?.type) {
+            case 'number':
+                tmp += `${item.key}=${toFixedSix(setting.value[item.key])},`;
+                break;
+            case 'input':
+                tmp += `${item.key}="${toFixedSix(setting.value[item.key])}",`;
+                break;
+            case 'integer':
+            case 'select':
+            case 'switch':
+            default:
+                tmp += `${item.key}=${setting.value[item.key]},`;
+                break;
         }
     }
     tmp = tmp.slice(0, -1);

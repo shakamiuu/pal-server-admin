@@ -1,14 +1,10 @@
 import '@/assets/style/global.less';
-// import globalComponents from '@/components';
 import router from '@/router';
 import store from '@/store';
-import ArcoVue from '@arco-design/web-vue';
-import '@arco-design/web-vue/dist/arco.css';
-import ArcoVueIcon from '@arco-design/web-vue/es/icon';
 import { createApp } from 'vue';
 import App from './App.vue';
 
-const pluginList = [store, router, ArcoVue, ArcoVueIcon];
+const pluginList = [store, router];
 
 const app = createApp(App);
 
@@ -16,4 +12,16 @@ const app = createApp(App);
 Object.entries(pluginList).forEach(([, v]) => {
     app.use(v);
 });
-app.mount('#app');
+
+app.mount('#app').$nextTick(() => {
+    // Remove Preload scripts loading
+    postMessage({ payload: 'removeLoading' }, '*');
+
+    // Use contextBridge
+    window.ipcRenderer.on(
+        'main-process-message',
+        (_event: any, message: any) => {
+            console.log(message);
+        },
+    );
+});

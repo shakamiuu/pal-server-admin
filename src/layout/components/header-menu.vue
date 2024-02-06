@@ -9,7 +9,7 @@
         <a-menu-item key="Config">游戏设定</a-menu-item>
         <a-menu-item key="Instruct">GM指令</a-menu-item>
         <a-menu-item key="Plan">定时计划</a-menu-item>
-        <a-menu-item key="Build">服务器维护</a-menu-item>
+        <a-menu-item key="Server">服务器维护</a-menu-item>
     </a-menu>
 </template>
 

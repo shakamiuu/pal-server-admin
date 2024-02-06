@@ -1,8 +1,4 @@
-import NProgress from 'nprogress';
-import 'nprogress/nprogress.css';
 import { createRouter, createWebHashHistory } from 'vue-router';
-
-NProgress.configure({ showSpinner: false });
 
 const router = createRouter({
     history: createWebHashHistory(),
@@ -19,9 +15,9 @@ const router = createRouter({
                     component: () => import('@/views/index/index.vue'),
                 },
                 {
-                    path: 'build',
-                    name: 'Build',
-                    component: () => import('@/views/build/index.vue'),
+                    path: 'server',
+                    name: 'Server',
+                    component: () => import('@/views/server/index.vue'),
                 },
                 {
                     path: 'config',

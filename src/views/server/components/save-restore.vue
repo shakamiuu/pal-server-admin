@@ -1,6 +1,6 @@
 <template>
     <a-upload
-        :action="`${baseUrl}/save/restore`"
+        action="http://localhost:18181/save/restore"
         :limit="1"
         accept=".tar.gz"
         :disabled="disabled"
@@ -15,11 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-
 defineProps<{ disabled: boolean }>();
-
-const baseUrl = ref(import.meta.env.VITE_API_BASE_URL);
 </script>
 
 <style lang="less" scoped></style>

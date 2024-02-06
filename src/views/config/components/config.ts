@@ -2,7 +2,7 @@ export interface ItemType {
     name: string;
     label: string;
     tip: string;
-    type: 'input' | 'number' | 'switch' | 'select';
+    type: 'input' | 'number' | 'switch' | 'select' | 'integer';
     options?: { label: string; value: string }[];
     precision?: number;
     step?: number;
@@ -32,17 +32,14 @@ export const serverSetting: ItemType[] = [
         name: 'ServerPlayerMaxNum',
         label: '服务器最大人数',
         tip: '服务器最大人数',
-        type: 'number',
+        type: 'integer',
     },
     { name: 'PublicIP', label: '主机位置', tip: '主机位置', type: 'input' },
     {
         name: 'PublicPort',
         label: '主机端口',
         tip: '主机端口',
-        type: 'number',
-        precision: 0,
-        step: 1,
-        min: 1,
+        type: 'integer',
     },
     {
         name: 'bIsMultiplay',
@@ -54,7 +51,7 @@ export const serverSetting: ItemType[] = [
         name: 'CoopPlayerMaxNum',
         label: '合作玩家人数',
         tip: '合作玩家人数',
-        type: 'number',
+        type: 'integer',
     },
     {
         name: 'AdminPassword',
@@ -75,7 +72,7 @@ export const serverSetting: ItemType[] = [
         name: 'RCONPort',
         label: 'RCON 端口',
         tip: 'RCON 端口',
-        type: 'number',
+        type: 'integer',
     },
     {
         name: 'Region',
@@ -312,10 +309,7 @@ export const gameSetting: ItemType[] = [
         name: 'DropItemMaxNum',
         label: '世界内的掉落物上限',
         tip: '世界内的掉落物上限',
-        type: 'number',
-        precision: 0,
-        step: 1,
-        min: 1,
+        type: 'integer',
     },
     {
         name: 'EnemyDropItemRate',
@@ -357,19 +351,13 @@ export const gameSetting: ItemType[] = [
         name: 'BaseCampMaxNum',
         label: '基地最大数量',
         tip: '基地最大数量',
-        type: 'number',
-        precision: 0,
-        step: 1,
-        min: 1,
+        type: 'integer',
     },
     {
         name: 'BaseCampWorkerMaxNum',
         label: '基地内帕鲁数量',
         tip: '基地内工作帕鲁的最大数量',
-        type: 'number',
-        precision: 0,
-        step: 1,
-        min: 1,
+        type: 'integer',
     },
     {
         name: 'BuildObjectDamageRate',
@@ -405,10 +393,7 @@ export const gameSetting: ItemType[] = [
         name: 'DropItemMaxNum_UNKO',
         label: 'UNKO掉落物上限',
         tip: '神秘UNKO掉落物上限',
-        type: 'number',
-        precision: 0,
-        step: 1,
-        min: 1,
+        type: 'integer',
     },
 ];
 
@@ -486,10 +471,7 @@ export const otherSetting: ItemType[] = [
         name: 'GuildPlayerMaxNum',
         label: '公会人数上限',
         tip: '公会人数上限',
-        type: 'number',
-        precision: 0,
-        step: 1,
-        min: 1,
+        type: 'integer',
     },
     {
         name: 'bAutoResetGuildNoOnlinePlayers',

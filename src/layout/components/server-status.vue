@@ -109,7 +109,7 @@ const diskPer = computed(
 
 const startMonitor = () => {
     console.log('startMonitor');
-    const socketUrl = `${import.meta.env.VITE_API_WEBSOCKET_URL}/ws/monitor`;
+    const socketUrl = 'ws://localhost:18181/ws/monitor';
     monitor.value = new WebSocket(socketUrl);
     monitor.value.onopen = (event: Event) => {
         console.log('监听服务器状态已打开', event);

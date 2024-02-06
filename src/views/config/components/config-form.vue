@@ -26,12 +26,14 @@
                         </a-option>
                     </a-select>
                     <a-input-number
-                        v-else-if="item.type == 'number'"
+                        v-else-if="
+                            item.type == 'number' || item.type == 'integer'
+                        "
                         v-model="form[item.name]"
                         mode="button"
-                        :precision="item.precision"
-                        :step="item.step"
-                        :min="item.step"
+                        :precision="item.type == 'integer' ? 0 : 2"
+                        :step="1"
+                        :min="0"
                     />
                     <a-switch
                         v-else-if="item.type == 'switch'"
@@ -65,12 +67,14 @@
                         </a-option>
                     </a-select>
                     <a-input-number
-                        v-else-if="item.type == 'number'"
+                        v-else-if="
+                            item.type == 'number' || item.type == 'integer'
+                        "
                         v-model="form[item.name]"
                         mode="button"
-                        :precision="item.precision"
-                        :step="item.step"
-                        :min="item.step"
+                        :precision="item.type == 'integer' ? 0 : 2"
+                        :step="1"
+                        :min="0"
                     />
                     <a-switch
                         v-else-if="item.type == 'switch'"
@@ -101,12 +105,14 @@
                         </a-option>
                     </a-select>
                     <a-input-number
-                        v-else-if="item.type == 'number'"
+                        v-else-if="
+                            item.type == 'number' || item.type == 'integer'
+                        "
                         v-model="form[item.name]"
                         mode="button"
-                        :precision="item.precision"
-                        :step="item.step"
-                        :min="item.step"
+                        :precision="item.type == 'integer' ? 0 : 2"
+                        :step="1"
+                        :min="0"
                     />
                     <a-switch
                         v-else-if="item.type == 'switch'"
@@ -137,12 +143,14 @@
                         </a-option>
                     </a-select>
                     <a-input-number
-                        v-else-if="item.type == 'number'"
+                        v-else-if="
+                            item.type == 'number' || item.type == 'integer'
+                        "
                         v-model="form[item.name]"
                         mode="button"
-                        :precision="item.precision"
-                        :step="item.step"
-                        :min="item.step"
+                        :precision="item.type == 'integer' ? 0 : 2"
+                        :step="1"
+                        :min="0"
                     />
                     <a-switch
                         v-else-if="item.type == 'switch'"

@@ -30,9 +30,7 @@ const handleClear = () => {
         onOk: async () => {
             appStore.loading = true;
             try {
-                await axios.post(
-                    `${import.meta.env.VITE_API_BASE_URL}/save/clear`,
-                );
+                await axios.post('http://localhost:18181/save/clear');
                 Message.success('删档完成');
             } finally {
                 appStore.loading = false;

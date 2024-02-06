@@ -60,7 +60,7 @@ const useStore = defineStore(key, {
             appStore.setLoading(true);
             try {
                 const { data } = await axios.post(
-                    `${import.meta.env.VITE_API_BASE_URL}/link`,
+                    'http://localhost:18181/link',
                     server,
                 );
                 Message.success('连接成功');
@@ -85,9 +85,7 @@ const useStore = defineStore(key, {
                 // 修改状态
                 this.link = false;
                 // 断开连接
-                await axios.post(
-                    `${import.meta.env.VITE_API_BASE_URL}/link/close`,
-                );
+                await axios.post('http://localhost:18181/link/close');
             } finally {
                 appStore.setLoading(false);
             }

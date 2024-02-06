@@ -1,24 +1,30 @@
 <template>
     <a-space size="large">
-        <div>
-            <a-tag
-                v-if="serverStore.status?.palServerStatus == 'UP'"
-                color="green"
-                :loading="stopLoading"
-            >
-                运行中
-            </a-tag>
-            <a-tag
-                v-if="serverStore.status?.palServerStatus == 'EXITED'"
-                color="red"
-                :loading="startLoading"
-            >
-                已停止
-            </a-tag>
-        </div>
+        <a-tag
+            v-if="
+                serverStore.link && serverStore.status?.palServerStatus == 'UP'
+            "
+            color="green"
+            :loading="stopLoading"
+        >
+            运行中
+        </a-tag>
+        <a-tag
+            v-if="
+                serverStore.link &&
+                serverStore.status?.palServerStatus == 'EXITED'
+            "
+            color="red"
+            :loading="startLoading"
+        >
+            已停止
+        </a-tag>
 
         <a-tooltip
-            v-if="serverStore.status?.palServerStatus == 'EXITED'"
+            v-if="
+                serverStore.link &&
+                serverStore.status?.palServerStatus == 'EXITED'
+            "
             content="开启服务器"
         >
             <a-button
@@ -35,7 +41,9 @@
             </a-button>
         </a-tooltip>
         <a-tooltip
-            v-if="serverStore.status?.palServerStatus == 'UP'"
+            v-if="
+                serverStore.link && serverStore.status?.palServerStatus == 'UP'
+            "
             content="停止服务器"
         >
             <a-button
@@ -51,7 +59,7 @@
                 <template #default> 关闭 </template>
             </a-button>
         </a-tooltip>
-        <a-tooltip content="重启服务器">
+        <a-tooltip v-if="serverStore.link" content="重启服务器">
             <a-button
                 v-if="serverStore.link"
                 status="warning"
@@ -99,9 +107,7 @@ const handleStart = () => {
         onOk: async () => {
             startLoading.value = true;
             try {
-                await axios.post(
-                    `${import.meta.env.VITE_API_BASE_URL}/manage/start`,
-                );
+                await axios.post('http://localhost:18181/manage/start');
                 Message.success('启动成功');
             } finally {
                 startLoading.value = false;
@@ -121,9 +127,7 @@ const handleStop = () => {
         onOk: async () => {
             stopLoading.value = true;
             try {
-                await axios.post(
-                    `${import.meta.env.VITE_API_BASE_URL}/manage/stop`,
-                );
+                await axios.post('http://localhost:18181/manage/stop');
                 Message.success('关闭成功');
             } finally {
                 stopLoading.value = false;
@@ -141,9 +145,7 @@ const handleRestart = () => {
         cancelText: '按错了！',
         hideCancel: false,
         onOk: async () => {
-            await axios.post(
-                `${import.meta.env.VITE_API_BASE_URL}/manage/restart`,
-            );
+            await axios.post('http://localhost:18181/manage/restart');
             Message.success('重启成功');
         },
     });
