@@ -1,68 +1,69 @@
 <template>
-    <a-space direction="vertical" fill>
-        <template #split>
-            <a-divider />
-        </template>
-        <div style="display: flex; flex-direction: column; align-items: center">
-            <a-progress
-                :percent="load"
-                :status="status(load, false)"
-                type="circle"
-                size="large"
-                animation
-            ></a-progress>
-            <a-typography-title :heading="6"> 系统负载 </a-typography-title>
-        </div>
-        <div style="display: flex; flex-direction: column; align-items: center">
-            <a-progress
-                :percent="cpuPer"
-                :status="status(cpuPer)"
-                type="circle"
-                size="large"
-                animation
-            ></a-progress>
-            <a-typography-title :heading="6"> CPU占用率 </a-typography-title>
-        </div>
-        <div style="display: flex; flex-direction: column; align-items: center">
-            <a-progress
-                :percent="memoryPer"
-                :status="status(memoryPer)"
-                type="circle"
-                size="large"
-                animation
-            ></a-progress>
-            <a-typography-title
-                v-if="serverStore.status?.memTotal"
-                :heading="6"
-            >
-                {{
-                    `内存(${((serverStore.status?.memUsed + serverStore.status?.memBuffCache) / 1024 / 1024).toFixed(2)}G/${(serverStore.status?.memTotal / 1024 / 1024).toFixed(2)}G)`
-                }}
-            </a-typography-title>
-            <a-typography-title v-else :heading="6">
-                内存空间
-            </a-typography-title>
-        </div>
-        <div style="display: flex; flex-direction: column; align-items: center">
-            <a-progress
-                :percent="diskPer"
-                :status="status(diskPer)"
-                size="large"
-                animation
-            ></a-progress>
-            <a-typography-title
-                v-if="serverStore.status?.diskSize"
-                :heading="6"
-            >
-                {{
-                    `硬盘空间(${(serverStore.status?.diskUsed / 1024).toFixed(2)}G/${(serverStore.status?.diskSize / 1024).toFixed(2)}G)`
-                }}
-            </a-typography-title>
-            <a-typography-title v-else :heading="6">
-                硬盘空间
-            </a-typography-title>
-        </div>
-    </a-space>
+    <a-scrollbar style="height: calc(100vh - 106px); overflow: auto">
+        <a-space direction="vertical" fill>
+            <div class="progress">
+                <a-progress
+                    :percent="load"
+                    :status="status(load, false)"
+                    type="circle"
+                    size="large"
+                    animation
+                ></a-progress>
+                <a-typography-title :heading="6"> 系统负载 </a-typography-title>
+            </div>
+            <div class="progress">
+                <a-progress
+                    :percent="cpuPer"
+                    :status="status(cpuPer)"
+                    type="circle"
+                    size="large"
+                    animation
+                ></a-progress>
+                <a-typography-title :heading="6">
+                    CPU占用率
+                </a-typography-title>
+            </div>
+            <div class="progress">
+                <a-progress
+                    :percent="memoryPer"
+                    :status="status(memoryPer)"
+                    type="circle"
+                    size="large"
+                    animation
+                ></a-progress>
+                <a-typography-title
+                    v-if="serverStore.status?.memTotal"
+                    :heading="6"
+                >
+                    {{
+                        `内存(${((serverStore.status?.memUsed + serverStore.status?.memBuffCache) / 1024 / 1024).toFixed(2)}G/${(serverStore.status?.memTotal / 1024 / 1024).toFixed(2)}G)`
+                    }}
+                </a-typography-title>
+                <a-typography-title v-else :heading="6">
+                    内存空间
+                </a-typography-title>
+            </div>
+            <div class="progress">
+                <a-progress
+                    :percent="diskPer"
+                    :status="status(diskPer)"
+                    size="large"
+                    animation
+                ></a-progress>
+                <a-typography-title
+                    v-if="serverStore.status?.diskSize"
+                    :heading="6"
+                >
+                    {{
+                        `硬盘空间(${(serverStore.status?.diskUsed / 1024).toFixed(2)}G/${(serverStore.status?.diskSize / 1024).toFixed(2)}G)`
+                    }}
+                </a-typography-title>
+                <a-typography-title v-else :heading="6">
+                    硬盘空间
+                </a-typography-title>
+            </div>
+        </a-space>
+    </a-scrollbar>
 </template>
 
 <script lang="ts" setup>
@@ -163,4 +164,14 @@ onUnmounted(() => {
 });
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.progress {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background-color: rgb(255 255 255 / 85%);
+    color: #fff;
+}
+</style>

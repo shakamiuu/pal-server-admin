@@ -37,7 +37,7 @@
                 </a-tooltip>
             </a-space>
         </template>
-        <a-scrollbar style="height: calc(100vh - 180px); overflow: auto">
+        <a-scrollbar style="height: calc(100vh - 206px); overflow: auto">
             <config-form ref="configRef" v-model="setting"></config-form>
         </a-scrollbar>
     </a-card>
@@ -60,31 +60,18 @@
 import { Message, Modal } from '@arco-design/web-vue';
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
-import {
-    defSetting,
-    gameSetting,
-    otherSetting,
-    pvpSetting,
-    serverSetting,
-} from './components/config';
+import { defSetting } from './components/config';
 import ConfigForm from './components/config-form.vue';
 
 const visible = ref(false);
 const iniText = ref('');
 const configRef = ref();
-const settings = [
-    ...gameSetting,
-    ...pvpSetting,
-    ...serverSetting,
-    ...otherSetting,
-];
-const tableData = ref<any[]>([]);
 
-const setting = ref<any>({});
+const setting = ref<string>('');
 
 const handleDefault = () => {
-    setting.value = { ...defSetting };
-    configRef.value.setDef();
+    setting.value = defSetting;
+    console.log('handleDefault', setting.value);
 };
 
 const handleGetSetting = async () => {
@@ -100,39 +87,13 @@ const handleGetSetting = async () => {
         });
         return;
     }
-    tableData.value = [];
     console.log('getPalWorldSettings', data);
-    // 使用 "(" 分割字符串
-    let list = data.split('(');
-    let temp = list[1];
-    // 使用 ")" 分割字符串
-    list = temp.split(')');
-    // 解析defaultConfig,逗号分割，等于号区分
-    list = list[0].split(',');
-    for (let i = 0; i < list.length; i++) {
-        const item = list[i].split('=');
-        const key = item[0].trim();
-        const value = item[1].replace(/"/g, '');
-        tableData.value.push({
-            key,
-            value,
-        });
-        const config = settings.find((s) => s.name === key);
-
-        if (!config) {
-            continue;
-        }
-        // 排除IP地址
-        setting.value[key] =
-            config.type == 'integer' || config.type == 'number'
-                ? toNumber(value)
-                : value;
-    }
+    setting.value = data;
 };
 
 const handleSaveSetting = (text?: string) => {
     console.log('handleSaveSetting', setting.value);
-    const ini = text ? text : generateIni();
+    const ini = text ? text : configRef.value.generateIni();
     console.log(ini);
     Modal.warning({
         title: '确认提交？',
@@ -153,63 +114,13 @@ const handleSaveSetting = (text?: string) => {
 const handleView = () => {
     console.log('handleView', setting.value);
     visible.value = true;
-    iniText.value = generateIni();
+    iniText.value = configRef.value.generateIni();
 };
 
 const handleEdit = () => {
     console.log('handleEdit', iniText.value);
     handleSaveSetting(iniText.value);
-};
-
-const generateIni = () => {
-    let header = `[/Script/Pal.PalGameWorldSettings]
-OptionSettings=(`;
-    let footer = `)`;
-    let tmp = '';
-    // 按照config的顺序生成ini
-    for (let i = 0; i < tableData.value.length; i++) {
-        const item = tableData.value[i];
-        const config = settings.find((s) => s.name === item.key);
-        if (!config) {
-            continue;
-        }
-        switch (config?.type) {
-            case 'number':
-                tmp += `${item.key}=${toFixedSix(setting.value[item.key])},`;
-                break;
-            case 'input':
-                tmp += `${item.key}="${toFixedSix(setting.value[item.key])}",`;
-                break;
-            case 'integer':
-            case 'select':
-            case 'switch':
-            default:
-                tmp += `${item.key}=${setting.value[item.key]},`;
-                break;
-        }
-    }
-    tmp = tmp.slice(0, -1);
-    // 去除换行符
-    tmp =
-        header +
-        tmp +
-        footer.replace(/\n/g, '').replace(/\r/g, '').replace(/\t/g, '');
-    return tmp;
-};
-
-const toNumber = (str: string) => {
-    const num = parseFloat(str);
-    return isNaN(num) ? str : num;
-};
-
-const toFixedSix = (value: string | number) => {
-    // 首先检查value是否确实是一个数字
-    if (typeof value === 'number' && !isNaN(value) && isFinite(value)) {
-        // 使用toFixed方法保留6位小数，并将其转换为字符串
-        return value.toFixed(6);
-    } else {
-        return value;
-    }
+    setting.value = iniText.value;
 };
 
 onMounted(() => {

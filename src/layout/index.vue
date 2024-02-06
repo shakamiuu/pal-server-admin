@@ -14,15 +14,18 @@
             </a-row>
         </a-layout-header>
         <a-layout class="bg">
-            <a-layout-content>
-                <div class="container">
-                    <router-view />
-                </div>
+            <a-layout-content class="container">
+                <router-view />
             </a-layout-content>
             <a-layout-sider>
-                <server-status style="padding: 10px"></server-status>
+                <server-status
+                    style="padding-top: 10px; padding-right: 15px"
+                ></server-status>
             </a-layout-sider>
         </a-layout>
+        <a-layout-footer style="height: 26px">
+            <out-link></out-link>
+        </a-layout-footer>
     </a-layout>
 </template>
 
@@ -30,14 +33,20 @@
 import HeaderMenu from './components/header-menu.vue';
 import HeaderButton from './components/header-button.vue';
 import ServerStatus from './components/server-status.vue';
+import OutLink from '@/components/out-link/index.vue';
 </script>
 
 <style lang="less" scoped>
 .container {
     padding: 20px;
 }
+
+.arco-layout-sider {
+    background: none !important;
+}
+
 .bg {
-    height: calc(100vh - 145px);
+    height: calc(100vh - 126px);
     background-image: url('@/assets/image/login_bg.jpg');
     background-size: cover;
     background-position: center center;

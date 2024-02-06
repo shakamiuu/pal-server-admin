@@ -1,34 +1,39 @@
 <template>
-    <a-space direction="vertical" fill>
-        <a-card title="快捷操作">
-            <a-space direction="vertical">
-                <a-space>
-                    <server-install
-                        :disabled="!serverStore.link"
-                    ></server-install>
-                    <server-update
-                        :disabled="!serverStore.link"
-                    ></server-update>
-                    <save-backup :disabled="!serverStore.link"></save-backup>
-                    <save-clear :disabled="!serverStore.link"></save-clear>
-                    <save-restore :disabled="!serverStore.link"></save-restore>
-                </a-space>
+    <a-row>
+        <a-col :span="12">
+            <a-space direction="vertical" size="large" fill>
+                <a-card title="一键开服">
+                    <a-space direction="vertical">
+                        <a-space>
+                            <server-install
+                                :disabled="!serverStore.link"
+                            ></server-install>
+                            <server-update
+                                :disabled="!serverStore.link"
+                            ></server-update>
+                        </a-space>
+                    </a-space>
+                </a-card>
+
+                <a-card title="日常维护">
+                    <a-space direction="vertical">
+                        <a-space>
+                            <save-backup
+                                :disabled="!serverStore.link"
+                            ></save-backup>
+                            <save-clear
+                                :disabled="!serverStore.link"
+                            ></save-clear>
+                            <save-restore
+                                :disabled="!serverStore.link"
+                            ></save-restore>
+                        </a-space>
+                    </a-space>
+                </a-card>
             </a-space>
-        </a-card>
-        <a-card class="foot">
-            推广链接:
-            <a-link
-                icon
-                @click="
-                    handleOpen(
-                        'https://www.aliyun.com/minisite/goods?userCode=xcsj1c25',
-                    )
-                "
-            >
-                阿里云幻兽帕鲁专用服务器
-            </a-link>
-        </a-card>
-    </a-space>
+        </a-col>
+        <a-col :span="12"> </a-col>
+    </a-row>
 </template>
 
 <script lang="ts" setup>
@@ -40,14 +45,6 @@ import SaveClear from './components/save-clear.vue';
 import { useServerStore } from '@/store';
 
 const serverStore = useServerStore();
-
-const handleOpen = (url: string) => {
-    window.open(url, '_blank');
-};
 </script>
 
-<style lang="less" scoped>
-.foot {
-    bottom: 0;
-}
-</style>
+<style lang="less" scoped></style>

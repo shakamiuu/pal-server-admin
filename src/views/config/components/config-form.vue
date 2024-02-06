@@ -167,30 +167,110 @@
 
 <script lang="ts" setup>
 import { ref, watch } from 'vue';
-import {
-    gameSetting,
-    pvpSetting,
-    serverSetting,
-    otherSetting,
-    defSetting,
-} from './config';
+import { gameSetting, pvpSetting, serverSetting, otherSetting } from './config';
 
-const props = defineProps<{ modelValue: any }>();
+const props = defineProps<{ modelValue: string }>();
 
 const form = ref<any>({});
+const tableData = ref<any[]>([]);
 
-const setDef = () => {
-    console.log('setDef');
-    form.value = { ...defSetting };
+const settings = [
+    ...gameSetting,
+    ...pvpSetting,
+    ...serverSetting,
+    ...otherSetting,
+];
+
+const formInit = (iniText: string) => {
+    console.log('formInit', iniText);
+    tableData.value = [];
+    // 使用 "(" 分割字符串
+    let list = iniText.split('(');
+    let temp = list[1];
+    // 使用 ")" 分割字符串
+    list = temp.split(')');
+    // 解析defaultConfig,逗号分割，等于号区分
+    list = list[0].split(',');
+    for (let i = 0; i < list.length; i++) {
+        const item = list[i].split('=');
+        const key = item[0].trim();
+        const value = item[1].replace(/"/g, '');
+        tableData.value.push({
+            key,
+            value,
+        });
+        const config = settings.find((s) => s.name === key);
+
+        if (!config) {
+            continue;
+        }
+        // 排除IP地址
+        form.value[key] =
+            config.type == 'integer' || config.type == 'number'
+                ? toNumber(value)
+                : value;
+    }
 };
 
-defineExpose({ setDef });
+const generateIni = () => {
+    let header = `[/Script/Pal.PalGameWorldSettings]
+OptionSettings=(`;
+    let footer = `)`;
+    let tmp = '';
+    // 按照config的顺序生成ini
+    for (let i = 0; i < tableData.value.length; i++) {
+        const item = tableData.value[i];
+        const config = settings.find((s) => s.name === item.key);
+        if (!config) {
+            continue;
+        }
+        switch (config?.type) {
+            case 'number':
+                tmp += `${item.key}=${toFixedSix(form.value[item.key])},`;
+                break;
+            case 'input':
+                tmp += `${item.key}="${toFixedSix(form.value[item.key])}",`;
+                break;
+            case 'integer':
+            case 'select':
+            case 'switch':
+            default:
+                tmp += `${item.key}=${form.value[item.key]},`;
+                break;
+        }
+    }
+    tmp = tmp.slice(0, -1);
+    // 去除换行符
+    tmp =
+        header +
+        tmp +
+        footer.replace(/\n/g, '').replace(/\r/g, '').replace(/\t/g, '');
+    return tmp;
+};
+
+const toFixedSix = (value: string | number) => {
+    // 首先检查value是否确实是一个数字
+    if (typeof value === 'number' && !isNaN(value) && isFinite(value)) {
+        // 使用toFixed方法保留6位小数，并将其转换为字符串
+        return value.toFixed(6);
+    } else {
+        return value;
+    }
+};
+
+const toNumber = (str: string) => {
+    const num = parseFloat(str);
+    return isNaN(num) ? str : num;
+};
+
+defineExpose({ generateIni });
 
 watch(
-    props.modelValue,
+    () => props.modelValue,
     (val) => {
+        console.log('watch', val);
         if (val) {
-            form.value = val;
+            formInit(val);
         }
     },
     { deep: true },
