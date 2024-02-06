@@ -36,6 +36,7 @@ const handleOk = () => {
 
 onMounted(() => {
     window.ipcRenderer.invoke('check-update');
+    appStore.setLoading(false);
 });
 </script>
 
