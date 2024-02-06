@@ -3,6 +3,13 @@
         <template #title> 游戏设定 </template>
         <template #extra>
             <a-space>
+                <a-button type="text" @click="handleView">
+                    <template #icon>
+                        <icon-edit />
+                    </template>
+                    编辑/查看
+                </a-button>
+
                 <a-tooltip content="还原默认设置">
                     <a-button
                         type="text"
@@ -20,7 +27,7 @@
                     <a-button
                         type="text"
                         status="success"
-                        @click="handleSaveSetting"
+                        @click="handleSaveSetting()"
                     >
                         <template #icon>
                             <icon-upload />
@@ -34,13 +41,25 @@
             <config-form ref="configRef" v-model="setting"></config-form>
         </a-scrollbar>
     </a-card>
+
+    <a-modal
+        v-model:visible="visible"
+        ok-text="上传"
+        :closable="false"
+        simple
+        @ok="handleEdit"
+    >
+        <a-textarea
+            v-model="iniText"
+            :auto-size="{ minRows: 5, maxRows: 10 }"
+        />
+    </a-modal>
 </template>
 
 <script lang="ts" setup>
 import { Message, Modal } from '@arco-design/web-vue';
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
-import ConfigForm from './components/config-form.vue';
 import {
     defSetting,
     gameSetting,
@@ -48,7 +67,10 @@ import {
     pvpSetting,
     serverSetting,
 } from './components/config';
+import ConfigForm from './components/config-form.vue';
 
+const visible = ref(false);
+const iniText = ref('');
 const configRef = ref();
 const settings = [
     ...gameSetting,
@@ -108,9 +130,9 @@ const handleGetSetting = async () => {
     }
 };
 
-const handleSaveSetting = () => {
+const handleSaveSetting = (text?: string) => {
     console.log('handleSaveSetting', setting.value);
-    const ini = generateIni();
+    const ini = text ? text : generateIni();
     console.log(ini);
     Modal.warning({
         title: '确认提交？',
@@ -126,6 +148,17 @@ const handleSaveSetting = () => {
             Message.success('保存成功！');
         },
     });
+};
+
+const handleView = () => {
+    console.log('handleView', setting.value);
+    visible.value = true;
+    iniText.value = generateIni();
+};
+
+const handleEdit = () => {
+    console.log('handleEdit', iniText.value);
+    handleSaveSetting(iniText.value);
 };
 
 const generateIni = () => {

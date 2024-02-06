@@ -6,7 +6,7 @@
         <div style="display: flex; flex-direction: column; align-items: center">
             <a-progress
                 :percent="load"
-                :status="status(load)"
+                :status="status(load, false)"
                 type="circle"
                 size="large"
                 animation
@@ -73,13 +73,17 @@ import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 const serverStore = useServerStore();
 const monitor = ref();
 
-const status = (percent: number) => {
+const status = (percent: number, error = true) => {
     if (percent < 0.5) {
         return 'normal';
     } else if (percent < 1) {
         return 'warning';
     } else {
-        return 'danger';
+        if (error) {
+            return 'danger';
+        } else {
+            return 'warning';
+        }
     }
 };
 
