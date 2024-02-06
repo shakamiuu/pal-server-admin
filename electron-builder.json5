@@ -10,6 +10,12 @@
         output: 'release/${version}',
     },
     files: ['dist', 'dist-electron'],
+    extraResources: [
+        {
+            from: 'resources',
+            to: 'server',
+        },
+    ],
     mac: {
         icon: './public/logo.png',
         target: ['dmg'],
