@@ -38,7 +38,7 @@
     publish: [
         {
             provider: 'generic',
-            url: 'https://download.mingyenet.com/palworld',
+            url: 'https://version.mingyenet.com/palworld',
         },
     ],
 }

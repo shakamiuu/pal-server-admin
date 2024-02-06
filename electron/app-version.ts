@@ -1,7 +1,7 @@
 import { autoUpdater } from 'electron-updater';
 import { dialog, BrowserWindow } from 'electron';
 
-const updateUrl = 'https://download.mingyenet.com/palworld';
+const updateUrl = 'https://version.mingyenet.com/palworld';
 
 /**检测更新 */
 export const checkUpdate = (win?: BrowserWindow) => {
