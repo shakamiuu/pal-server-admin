@@ -46,8 +46,9 @@
                     <a-input-number
                         v-model="form.port"
                         placeholder="端口"
-                        style="width: 70px"
+                        style="width: 80px"
                         hide-button
+                        @input="handlePortInput"
                     />
                 </a-form-item>
                 <a-form-item
@@ -119,6 +120,11 @@ const handleHostSelect = (value: string) => {
     if (server) {
         form.value = server;
     }
+};
+
+const handlePortInput = (value: number | undefined) => {
+    console.log('handlePortInput', value);
+    form.value.port = value || 22;
 };
 
 const handleSubmit = () => {
