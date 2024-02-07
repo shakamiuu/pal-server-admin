@@ -19,7 +19,7 @@ defineProps<{ disabled: boolean }>();
 const appStore = useAppStore();
 
 const handleClear = () => {
-    console.log('handleInstall');
+    console.log('handleClear');
     Modal.warning({
         title: '删档确认',
         content:

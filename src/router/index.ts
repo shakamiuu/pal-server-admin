@@ -30,9 +30,9 @@ const router = createRouter({
                     component: () => import('@/views/instruct/index.vue'),
                 },
                 {
-                    path: 'plan',
-                    name: 'Plan',
-                    component: () => import('@/views/plan/index.vue'),
+                    path: 'auto',
+                    name: 'Auto',
+                    component: () => import('@/views/auto/index.vue'),
                 },
             ],
         },

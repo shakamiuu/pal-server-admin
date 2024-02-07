@@ -1,5 +1,10 @@
 <template>
-    <a-button type="primary" :disabled="disabled" @click="handleBackup">
+    <a-button
+        type="primary"
+        status="success"
+        :disabled="disabled"
+        @click="handleBackup"
+    >
         存档备份
     </a-button>
 </template>

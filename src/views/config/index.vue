@@ -62,7 +62,9 @@ import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import { defSetting } from './components/config';
 import ConfigForm from './components/config-form.vue';
+import { useServerStore } from '@/store';
 
+const serverStore = useServerStore();
 const visible = ref(false);
 const iniText = ref('');
 const configRef = ref();
@@ -124,7 +126,14 @@ const handleEdit = () => {
 };
 
 onMounted(() => {
-    handleGetSetting();
+    if (serverStore.link) {
+        handleGetSetting();
+    } else {
+        Modal.warning({
+            title: '未连接服务器',
+            content: '尚未连接服务器，无法获取配置信息！',
+        });
+    }
 });
 </script>
 

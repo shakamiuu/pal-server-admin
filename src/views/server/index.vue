@@ -18,6 +18,9 @@
                 <a-card title="日常维护">
                     <a-space direction="vertical">
                         <a-space>
+                            <free-memory
+                                :disabled="!serverStore.link"
+                            ></free-memory>
                             <save-backup
                                 :disabled="!serverStore.link"
                             ></save-backup>
@@ -42,6 +45,7 @@ import ServerUpdate from './components/server-update.vue';
 import SaveBackup from './components/save-backup.vue';
 import SaveRestore from './components/save-restore.vue';
 import SaveClear from './components/save-clear.vue';
+import FreeMemory from './components/free-memory.vue';
 import { useServerStore } from '@/store';
 
 const serverStore = useServerStore();

@@ -1,5 +1,10 @@
 <template>
-    <a-button type="primary" :disabled="disabled" @click="handleUpdate">
+    <a-button
+        type="primary"
+        status="success"
+        :disabled="disabled"
+        @click="handleUpdate"
+    >
         游戏更新
     </a-button>
     <a-modal

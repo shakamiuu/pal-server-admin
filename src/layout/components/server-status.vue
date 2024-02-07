@@ -3,8 +3,8 @@
         <a-space direction="vertical" fill>
             <div class="progress">
                 <a-progress
-                    :percent="load"
-                    :status="status(load, false)"
+                    :percent="serverStore.load()"
+                    :status="status(serverStore.load(), false)"
                     type="circle"
                     size="large"
                     animation
@@ -13,8 +13,8 @@
             </div>
             <div class="progress">
                 <a-progress
-                    :percent="cpuPer"
-                    :status="status(cpuPer)"
+                    :percent="serverStore.cpuPer()"
+                    :status="status(serverStore.cpuPer())"
                     type="circle"
                     size="large"
                     animation
@@ -25,8 +25,8 @@
             </div>
             <div class="progress">
                 <a-progress
-                    :percent="memoryPer"
-                    :status="status(memoryPer)"
+                    :percent="serverStore.memoryPer()"
+                    :status="status(serverStore.memoryPer())"
                     type="circle"
                     size="large"
                     animation
@@ -45,8 +45,8 @@
             </div>
             <div class="progress">
                 <a-progress
-                    :percent="diskPer"
-                    :status="status(diskPer)"
+                    :percent="serverStore.diskPer()"
+                    :status="status(serverStore.diskPer())"
                     size="large"
                     animation
                 ></a-progress>
@@ -67,11 +67,12 @@
 </template>
 
 <script lang="ts" setup>
-import { useServerStore } from '@/store';
+import { useAutoStore, useServerStore } from '@/store';
 import { Modal } from '@arco-design/web-vue';
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watch } from 'vue';
 
 const serverStore = useServerStore();
+const autoStore = useAutoStore();
 const monitor = ref();
 
 const status = (percent: number, error = true) => {
@@ -87,30 +88,6 @@ const status = (percent: number, error = true) => {
         }
     }
 };
-
-const load = computed(
-    () => Math.ceil(serverStore.status?.loadAverage * 100) / 100 || 0,
-);
-
-const cpuPer = computed(
-    () => Math.ceil(100 - serverStore.status?.cpuIdle) / 100 || 0,
-);
-
-const memoryPer = computed(
-    () =>
-        Math.ceil(
-            ((serverStore.status?.memBuffCache + serverStore.status?.memUsed) /
-                serverStore.status?.memTotal) *
-                100,
-        ) / 100 || 0,
-);
-
-const diskPer = computed(
-    () =>
-        Math.ceil(
-            (serverStore.status?.diskUsed / serverStore.status?.diskSize) * 100,
-        ) / 100 || 0,
-);
 
 const startMonitor = () => {
     console.log('startMonitor');
@@ -134,6 +111,7 @@ const startMonitor = () => {
     monitor.value.onmessage = (event: MessageEvent) => {
         // console.log('监听服务器状态', event);
         serverStore.setStatus(JSON.parse(event.data));
+        autoStore.auto(serverStore.memoryPer());
     };
 };
 

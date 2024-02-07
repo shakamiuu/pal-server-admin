@@ -104,6 +104,29 @@ const useStore = defineStore(key, {
         setStatus(status: any) {
             this.status = status;
         },
+
+        load() {
+            return Math.ceil(this.status?.loadAverage * 100) / 100 || 0;
+        },
+        cpuPer() {
+            return Math.ceil(100 - this.status?.cpuIdle) / 100 || 0;
+        },
+        memoryPer() {
+            return (
+                Math.ceil(
+                    ((this.status?.memBuffCache + this.status?.memUsed) /
+                        this.status?.memTotal) *
+                        100,
+                ) / 100 || 0
+            );
+        },
+        diskPer() {
+            return (
+                Math.ceil(
+                    (this.status?.diskUsed / this.status?.diskSize) * 100,
+                ) / 100 || 0
+            );
+        },
     },
     persist: {
         key,
