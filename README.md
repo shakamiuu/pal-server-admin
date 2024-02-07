@@ -7,19 +7,13 @@
 
 #### 预览
 
-![](https://gitee.com/haibiaoG/pal-server-admin/raw/master/assets/images/2024-02-05_13-33-31.png)
+![](https://gitee.com/haibiaoG/pal-server-admin/raw/master/assets/images/2024-02-07_15-21-00.png)
 
-![](https://gitee.com/haibiaoG/pal-server-admin/raw/master/assets/images/2024-02-05_13-34-31.png)
+![](https://gitee.com/haibiaoG/pal-server-admin/raw/master/assets/images/2024-02-07_15-17-30.png)
 
-![](https://gitee.com/haibiaoG/pal-server-admin/raw/master/assets/images/2024-02-05_13-34-24.png)
+![](https://gitee.com/haibiaoG/pal-server-admin/raw/master/assets/images/2024-02-07_15-17-16.png)
 
-![](https://gitee.com/haibiaoG/pal-server-admin/raw/master/assets/images/2024-02-05_13-35-06.png)
-
-![](https://gitee.com/haibiaoG/pal-server-admin/raw/master/assets/images/2024-02-05_13-35-30.png)
-
-![](https://gitee.com/haibiaoG/pal-server-admin/raw/master/assets/images/2024-02-05_13-35-40.png)
-
-![](https://gitee.com/haibiaoG/pal-server-admin/raw/master/assets/images/2024-02-05_13-36-01.png)
+![](https://gitee.com/haibiaoG/pal-server-admin/raw/master/assets/images/2024-02-07_15-20-27.png)
 
 #### 安装教程
 
